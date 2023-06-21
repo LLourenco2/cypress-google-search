@@ -64,7 +64,9 @@ stages {
         }
         stage('Perform manual testing') {
             steps {
-                echo 'Perform manual testing'
+                timeout(activity: true, time: 5) {
+                    input 'Proceed to production?'
+                }
             }
         }
     }
