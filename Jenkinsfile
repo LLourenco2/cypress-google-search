@@ -33,7 +33,8 @@ stages {
             steps {
                 // echo 'SonarQube analysis'
                 script {
-                    scannerHome = tool 'SonarScanner';
+                    // scannerHome = tool 'SonarScanner';
+                    scannerHome = tool name: 'sonar-scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation';
                     // scannerHome = tool 'sonar-scanner';
                 }
                 withSonarQubeEnv('SonarQube') {
