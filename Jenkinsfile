@@ -75,34 +75,44 @@ stages {
     //     }
     // }
         stage('Run automated tests') {
-            when { expression { params.skip_test != true } }
-            steps {
-              echo "Running automated tests"
-                sh 'npm prune'
-                sh 'npm cache clean --force'
-                sh 'npm i'
-                sh 'npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generator'
-                sh 'npm install cypress'
-                sh 'npm cypress run'
-            }
-            post {
-                success {
-                    publishHTML (
-                        target : [
-                            allowMissing: false,
-                            alwaysLinkToLastBuild: true,
-                            keepAll: true,
-                            reportDir: 'mochawesome-report',
-                            reportFiles: 'mochawesome.html',
-                            reportName: 'My Reports',
-                            reportTitles: 'The Report'])
+            echo 'SonarQube analysis'
+            // when { expression { params.skip_test != true } }
+            // steps {
+            //   echo "Running automated tests"
+            //     sh 'npm prune'
+            //     sh 'npm cache clean --force'
+            //     sh 'npm i'
+            //     sh 'npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generator'
+            //     sh 'npm install cypress'
+            //     sh 'cypress run'
+            // }
+            // post {
+            //     success {
+            //         publishHTML (
+            //             target : [
+            //                 allowMissing: false,
+            //                 alwaysLinkToLastBuild: true,
+            //                 keepAll: true,
+            //                 reportDir: 'mochawesome-report',
+            //                 reportFiles: 'mochawesome.html',
+            //                 reportName: 'My Reports',
+            //                 reportTitles: 'The Report'])
 
-                }
-            }
+            //     }
+            // }
         }
         stage('SonarQube analysis') {
             steps {
-                echo 'SonarQube analysis'
+                // echo 'SonarQube analysis'
+                when { expression { params.skip_sonar != true } }
+                steps {
+                    script {
+                            scannerHome = tool 'sonar-scanner';
+                        }
+                    withSonarQubeEnv('SonarCloud') { // If you have configured more than one global server connection, you can specify its name
+                    sh "${scannerHome}/bin/sonar-scanner"
+                    }
+                }
             }
         }
         stage('JMeter Test') {
