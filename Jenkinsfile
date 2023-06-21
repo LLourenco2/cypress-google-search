@@ -33,7 +33,7 @@ stages {
             steps {
                 // echo 'SonarQube analysis'
                 script {
-                    def scannerHome = tool 'SonarScanner 4.0';
+                    scannerHome = tool 'SonarScanner';
                     // scannerHome = tool 'sonar-scanner';
                 }
                 withSonarQubeEnv('SonarQube') {
