@@ -23,6 +23,7 @@ stages {
                 sh 'npm cache clean --force'
                 sh 'npm i'
                 sh 'npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generator'
+                sh 'apt-get install xvfb'
                 sh 'npm run cypress:run --browser $BROWSER --headless'
             }
         }
