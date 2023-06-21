@@ -16,65 +16,6 @@ parameters{
 }
 
 stages {
-    // stage('Build/Deploy app to staging') {
-    //     steps {
-    //         sshPublisher(
-    //             publishers: [
-    //                 sshPublisherDesc(
-    //                     configName: 'Staging', 
-    //                     transfers: [
-    //                         sshTransfer(
-    //                             cleanRemote: false, 
-    //                             excludes: 'node_modules/,cypress/,**/*.yml',
-    //                             execCommand: '''
-    //                             cd /usr/share/nginx/html
-    //                             npm ci
-    //                             pm2 restart todo''',
-    //                             execTimeout: 120000, 
-    //                             flatten: false, 
-    //                             makeEmptyDirs: false, 
-    //                             noDefaultExcludes: false, 
-    //                             patternSeparator: '[, ]+', 
-    //                             remoteDirectory: '', 
-    //                             remoteDirectorySDF: false, 
-    //                             removePrefix: '', 
-    //                             sourceFiles: '**/*'
-    //                             )
-    //                         ], 
-    //                     usePromotionTimestamp: false, 
-    //                     useWorkspaceInPromotion: false, 
-    //                     verbose: true
-    //                 )
-    //             ]
-    //         )
-    //     }
-    // }
-    // stage('Run automated tests'){
-    //     when { expression { params.skip_test != true } }
-    //     steps {
-    //         echo "Running automated tests"
-    //         sh 'npm prune'
-    //         sh 'npm cache clean --force'
-    //         sh 'npm i'
-    //         sh 'npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generator'
-    //         sh 'npm run e2e:staging1spec'
-    //     }
-    //     post {
-    //         success {
-    //             publishHTML (
-    //                 target : [
-    //                     allowMissing: false,
-    //                     alwaysLinkToLastBuild: true,
-    //                     keepAll: true,
-    //                     reportDir: 'mochawesome-report',
-    //                     reportFiles: 'mochawesome.html',
-    //                     reportName: 'My Reports',
-    //                     reportTitles: 'The Report'])
-
-    //         }
-    //     }
-    // }
-
         stage('Run automated tests') {
             when { expression { params.skip_test != true } }
             steps {
@@ -84,20 +25,6 @@ stages {
                 sh 'npm i'
                 sh 'npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generator'
                 sh 'npm run cypress:run'
-            }
-            post {
-                success {
-                    publishHTML (
-                        target : [
-                            allowMissing: false,
-                            alwaysLinkToLastBuild: true,
-                            keepAll: true,
-                            reportDir: 'mochawesome-report',
-                            reportFiles: 'mochawesome.html',
-                            reportName: 'My Reports',
-                            reportTitles: 'The Report'])
-
-                }
             }
         }
         stage('SonarQube analysis') {
