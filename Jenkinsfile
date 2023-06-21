@@ -36,7 +36,7 @@ stages {
                     scannerHome = tool name: 'sonar-scanner';
                 }
                 withSonarQubeEnv('SonarQube') {
-                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=TestePratico -Dsonar.sources=. -Dsonar.login=d9b19b063804c7d6ed0043015658c75c0f7271b3 -Dsonar.exclusions='jmeter/*'" //Deveria estar num .env
+                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=TestePratico -Dsonar.sources=. -Dsonar.login=d9b19b063804c7d6ed0043015658c75c0f7271b3" //Deveria estar num .env
                 }
             }
         }
@@ -48,7 +48,7 @@ stages {
                     //Jmeter copiado para dentro do docker
                     def jmeterHome = '/usr/share/jmeter'
 
-                    def jmeterScript = './TestePraticojmx.jmx'
+                    def jmeterScript = '/usr/share/jmeter/bin/TestePraticojmx.jmx'
 
                     sh "${jmeterHome}/bin/jmeter -n -t ${jmeterScript} -l result.jtl"
                 }
