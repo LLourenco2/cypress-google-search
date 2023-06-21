@@ -45,7 +45,7 @@ stages {
             steps {
                 echo 'JMeter Test'
                 script {
-                    sh 'cp -r /jmeter/bin* /usr/share/jmeter/'
+                    // sh 'cp -r /jmeter/bin* /usr/share/jmeter/'
 
                     def jmeterHome = '/usr/share/jmeter'
 
