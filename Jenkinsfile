@@ -6,7 +6,7 @@ agent any
 //     choice(name: 'BROWSER', choices:['electron', 'chrome', 'edge', 'firefox'], description: "Select the browser to be used in your cypress tests")
 // }
 tools {nodejs "Nodejs"}
-tools {sonarScanner 'SonarQube'}
+// tools {sonarScanner 'SonarQube'}
 parameters{
     // string(name: 'SPEC', defaultValue:"cypress/e2e/1-getting-started/todo.cy.js", description: "Enter the cypress script path that you want to execute")
     choice(name: 'BROWSER', choices:['electron', 'chrome', 'edge', 'firefox'], description: "Select the browser to be used in your cypress tests")
@@ -32,7 +32,10 @@ stages {
             when { expression { params.skip_sonar != true } }
             steps {
                 // echo 'SonarQube analysis'
-                
+              
+                withSonarQubeEnv('sonarQube') {
+                sh 'mvn clean package sonar:sonar'
+              
                     // script {
                     //         scannerHome = tool 'sonar-scanner';
                     //     }
