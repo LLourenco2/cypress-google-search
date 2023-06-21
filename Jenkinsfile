@@ -82,6 +82,7 @@ stages {
                 sh 'npm cache clean --force'
                 sh 'npm i'
                 sh 'npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generator'
+                sh 'npm install cypress'
                 sh 'cypress run'
             }
             post {
