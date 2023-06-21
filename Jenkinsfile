@@ -33,7 +33,8 @@ stages {
             steps {
                 // echo 'SonarQube analysis'
                 script {
-                    scannerHome = tool 'sonar-scanner';
+                    def scannerHome = tool 'SonarScanner 4.0';
+                    // scannerHome = tool 'sonar-scanner';
                 }
                 withSonarQubeEnv('SonarQube') {
                 sh "${scannerHome}/bin/sonar-scanner"
