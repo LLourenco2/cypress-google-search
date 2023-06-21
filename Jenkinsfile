@@ -45,13 +45,23 @@ stages {
                 echo 'JMeter Test'
                 script {
                     // Path to the JMeter installation directory
-                    def jmeterHome = "C:/Users/ASUS/Documents/QOS_Class/apache-jmeter-5.5/bin"
+                    def jmeterHome = "C:/Users/ASUS/Documents/QOS_Class/apache-jmeter-5.5"
 
                     // Path to the JMeter test script
                     def jmeterScript = './TestePraticojmx.jmx'
 
                     // Execute JMeter test
                     sh "${jmeterHome}/bin/jmeter -n -t ${jmeterScript} -l result.jtl"
+                }
+                 post {
+                    always {
+                        // Archive JTL result file
+                        archiveArtifacts 'result.jtl'
+                    }
+                    success {
+                        // Publish JMeter report using Performance plugin
+                        perfReport filterRegex:'', sourceDataFiles: 'result.jtl'
+                    }
                 }
             }
         }
