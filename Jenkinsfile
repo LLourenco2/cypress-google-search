@@ -45,8 +45,7 @@ stages {
             steps {
                 echo 'JMeter Test'
                 script {
-                    // sh 'cp -r /jmeter/bin* /usr/share/jmeter/'
-
+                    //Jmeter copiado para dentro do docker
                     def jmeterHome = '/usr/share/jmeter'
 
                     def jmeterScript = './TestePraticojmx.jmx'
