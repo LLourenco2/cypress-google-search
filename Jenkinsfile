@@ -36,31 +36,28 @@ stages {
                     scannerHome = tool name: 'sonar-scanner';
                 }
                 withSonarQubeEnv('SonarQube') {
-                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=TestePratico -Dsonar.sources=. -Dsonar.login=d9b19b063804c7d6ed0043015658c75c0f7271b3"
+                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=TestePratico -Dsonar.sources=. -Dsonar.login=d9b19b063804c7d6ed0043015658c75c0f7271b3" //Deveria estar num .env
                 }
             }
         }
         stage('JMeter Test') {
+            when { expression { params.skip_jmeter != true } }
             steps {
                 echo 'JMeter Test'
                 script {
                     sh 'cp -r /jmeter/bin* /usr/share/jmeter/'
-                    // Path to the JMeter installation directory
+
                     def jmeterHome = '/usr/share/jmeter'
 
-                    // Path to the JMeter test script
                     def jmeterScript = './TestePraticojmx.jmx'
 
-                    // Execute JMeter test
                     sh "${jmeterHome}/bin/jmeter -n -t ${jmeterScript} -l result.jtl"
                 }
                  post {
                     always {
-                        // Archive JTL result file
                         archiveArtifacts 'result.jtl'
                     }
                     success {
-                        // Publish JMeter report using Performance plugin
                         perfReport filterRegex:'', sourceDataFiles: 'result.jtl'
                     }
                 }
