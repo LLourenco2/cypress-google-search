@@ -74,6 +74,7 @@ stages {
     //         }
     //     }
     // }
+
         stage('Run automated tests') {
             when { expression { params.skip_test != true } }
             steps {
@@ -82,8 +83,7 @@ stages {
                 sh 'npm cache clean --force'
                 sh 'npm i'
                 sh 'npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generator'
-                sh 'npm install cypress'
-                sh 'cypress run'
+                sh 'npm run cypress:run'
             }
             post {
                 success {
