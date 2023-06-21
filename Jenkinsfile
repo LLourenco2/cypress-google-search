@@ -35,7 +35,7 @@ stages {
               
                 withSonarQubeEnv('sonarQube') {
                 sh 'mvn clean package sonar:sonar'
-              
+                }
                     // script {
                     //         scannerHome = tool 'sonar-scanner';
                     //     }
