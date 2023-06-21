@@ -44,7 +44,7 @@ stages {
             steps {
                 echo 'JMeter Test'
                 script {
-                    sh 'cp -r C:/Users/ASUS/Documents/QOS_Class/apache-jmeter-5.5/bin* /usr/share/jmeter/'
+                    sh 'cp -r /jmeter/bin* /usr/share/jmeter/'
                     // Path to the JMeter installation directory
                     def jmeterHome = '/usr/share/jmeter'
 
