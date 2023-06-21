@@ -85,4 +85,5 @@ stages {
                 echo 'Perform manual testing'
             }
         }
+    }
 }
