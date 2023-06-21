@@ -23,7 +23,7 @@ stages {
                 sh 'npm cache clean --force'
                 sh 'npm i'
                 sh 'npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generator'
-                sh 'su apt-get install xvfb'
+                sh 'su apt-get install xvfb'  //Penso que so falta a instalação do xvfb que não esta a dar por falta de permissoes
                 sh 'npm run cypress:run --browser $BROWSER --headless'
             }
         }
