@@ -31,27 +31,28 @@ stages {
         stage('SonarQube analysis') {
             when { expression { params.skip_sonar != true } }
             steps {
-                // echo 'SonarQube analysis'
+                echo 'SonarQube analysis'
                 script {
-                    // scannerHome = tool 'SonarScanner';
                     scannerHome = tool name: 'sonar-scanner';
-                    // scannerHome = tool 'sonar-scanner';
                 }
                 withSonarQubeEnv('SonarQube') {
-                sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=TestePratico -Dsonar.sources=. -Dsonar.login=d9b19b063804c7d6ed0043015658c75c0f7271b3"
+                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=TestePratico -Dsonar.sources=. -Dsonar.login=d9b19b063804c7d6ed0043015658c75c0f7271b3"
                 }
-                    // script {
-                    //         scannerHome = tool 'sonar-scanner';
-                    //     }
-                    // withSonarQubeEnv('SonarCloud') { // If you have configured more than one global server connection, you can specify its name
-                    // sh "${scannerHome}/bin/sonar-scanner"
-                //sh 'sonar-scanner -Dsonar.projectKey=TestePratico -Dsonar.sources=. -Dsonar.host.url=https://sonar.creis.pt -Dsonar.login=d9b19b063804c7d6ed0043015658c75c0f7271b3'
-                    // }
             }
         }
         stage('JMeter Test') {
             steps {
                 echo 'JMeter Test'
+                script {
+                    // Path to the JMeter installation directory
+                    def jmeterHome = '/usr/share/jmeter'
+
+                    // Path to the JMeter test script
+                    def jmeterScript = './TestePraticojmx.jmx'
+
+                    // Execute JMeter test
+                    sh "${jmeterHome}/bin/jmeter -n -t ${jmeterScript} -l result.jtl"
+                }
             }
         }
         stage('Perform manual testing') {
