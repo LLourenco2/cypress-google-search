@@ -32,16 +32,18 @@ stages {
             when { expression { params.skip_sonar != true } }
             steps {
                 // echo 'SonarQube analysis'
-              
+                script {
+                    scannerHome = tool 'sonar-scanner';
+                }
                 withSonarQubeEnv('SonarQube') {
-                sh 'mvn clean package sonar:sonar'
+                sh "${scannerHome}/bin/sonar-scanner"
                 }
                     // script {
                     //         scannerHome = tool 'sonar-scanner';
                     //     }
                     // withSonarQubeEnv('SonarCloud') { // If you have configured more than one global server connection, you can specify its name
                     // sh "${scannerHome}/bin/sonar-scanner"
-                sh 'sonar-scanner -Dsonar.projectKey=TestePratico -Dsonar.sources=. -Dsonar.host.url=https://sonar.creis.pt -Dsonar.login=d9b19b063804c7d6ed0043015658c75c0f7271b3'
+                //sh 'sonar-scanner -Dsonar.projectKey=TestePratico -Dsonar.sources=. -Dsonar.host.url=https://sonar.creis.pt -Dsonar.login=d9b19b063804c7d6ed0043015658c75c0f7271b3'
                     // }
             }
         }
