@@ -45,7 +45,7 @@ stages {
                 echo 'JMeter Test'
                 script {
                     // Path to the JMeter installation directory
-                    def jmeterHome = 'C:\Users\ASUS\Documents\QOS_Class\apache-jmeter-5.5\bin'
+                    def jmeterHome = "C:/Users/ASUS/Documents/QOS_Class/apache-jmeter-5.5/bin"
 
                     // Path to the JMeter test script
                     def jmeterScript = './TestePraticojmx.jmx'
