@@ -33,7 +33,7 @@ stages {
             steps {
                 // echo 'SonarQube analysis'
               
-                withSonarQubeEnv('sonarQube') {
+                withSonarQubeEnv('SonarQube') {
                 sh 'mvn clean package sonar:sonar'
                 }
                     // script {
