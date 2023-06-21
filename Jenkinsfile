@@ -39,7 +39,6 @@ stages {
                     // sh "${scannerHome}/bin/sonar-scanner"
                 sh 'sonar-scanner -Dsonar.projectKey=TestePratico -Dsonar.sources=. -Dsonar.host.url=https://sonar.creis.pt -Dsonar.login=d9b19b063804c7d6ed0043015658c75c0f7271b3'
                     // }
-                }
             }
         }
         stage('JMeter Test') {
